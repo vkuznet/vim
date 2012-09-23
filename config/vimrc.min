@@ -1,0 +1,64 @@
+" daw -- delete a word under cursor
+" caw -- delete a word under cursor and put into insert mode
+" see more with :help text-object
+" for instance vaw, vas, etc. commands
+
+filetype on
+syntax on
+
+" ----------------------- Custom settings ---------------------
+" set compatible
+set noai
+set nohlsearch
+set backup
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set ignorecase
+set encoding=utf-8
+set textwidth=79
+
+" ----------------------- Custom let-ings ---------------------
+" set my leader key
+let mapleader = ","
+
+" ----------------------- Custom mappings ---------------------
+" use space to clear up highlights
+nnoremap <leader><space> :noh<cr>
+" use tab for jumping around brackets
+nnoremap <tab> %
+vnoremap <tab> %
+" vertical split
+nnoremap <leader>v <C-w>v<C-w>l
+" horizontal split
+nnoremap <leader>h <C-w>s<C-w>l
+" useful save/quit
+nnoremap <leader>wq :wq!<CR>
+nnoremap <leader>q :q!<CR>
+
+
+" -----------------------------------------------------------
+" I use C-Left/Right to switch between OSX spaces, once I'll upgrade to Lion
+" I need to check if I can put back the mapping in vim
+" here <silent> – tells vim not to echo to the statusline what its doing during
+" the execution of the mapping.
+" Next Tab
+nnoremap <silent> <C-n> :tabnext<CR>
+" Previous Tab
+nnoremap <silent> <C-p> :tabprevious<CR>
+" New Tab
+nnoremap <silent> <C-t> :tabnew<CR>
+" move-up to next window
+nnoremap <silent> <C-k> :wincmd k<CR>
+" move-down to next window
+nnoremap <silent> <C-j> :wincmd j<CR>
+" move-left to next window
+nnoremap <silent> <C-h> :wincmd h<CR>
+" move-right to next window
+nnoremap <silent> <C-l> :wincmd l<CR>
+" move-up, use shift-key plus k
+nnoremap <silent> <S-k> <C-U><C-U>
+" move-down, use shift-key plus j
+nnoremap <silent> <S-j> <C-D><C-D>
+" -----------------------------------------------------------

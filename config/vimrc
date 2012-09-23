@@ -1,0 +1,187 @@
+" Very nice collection of vim tips
+" http://stackoverflow.com/questions/164847/what-is-in-your-vimrc
+" http://stevelosh.com/blog/2010/09/coming-home-to-vim/?
+" List usefull vim plugins
+" http://mirnazim.org/writings/vim-plugins-i-use/
+" http://www.vimninjas.com/2012/09/03/5-plugins-you-should-put-in-your-vimrc/
+" Vim tips: http://www.cs.swarthmore.edu/help/vim/home.html
+"
+" daw -- delete a word under cursor
+" caw -- delete a word under cursor and put into insert mode
+" see more with :help text-object
+" for instance vaw, vas, etc. commands
+" :set spell
+" it uses the following commands, [s for next misspelled word, z= to give list
+" of choices
+
+" pathogen plugin
+filetype off
+"runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
+"call pathogen#runtime_append_all_bundles()
+syntax on
+filetype plugin indent on
+
+" ----------------------- Custom settings ---------------------
+set nocompatible
+set autoindent
+set laststatus=2
+set modelines=0
+set nohlsearch
+set backup
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+set ignorecase
+set smartcase
+set gdefault
+"set incsearch
+set showcmd
+set showmatch
+set hlsearch
+set encoding=utf-8
+set showmode
+set hidden
+set ttyfast
+set ruler
+"set relativenumber
+set undofile
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+"set colorcolumn=85
+set backspace=indent,eol,start
+"set foldmethod=marker
+set wildmenu
+set wildmode=list:longest,full
+" set autocompletion to read from dictionary
+" see more http://vim.wikia.com/wiki/Dictionary_completions
+set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+set complete-=k complete+=k
+":retab
+":map <F12> :set number!<CR>
+":set spell
+set fillchars+=stl:\ ,stlnc:\
+" color settings, using 256 I get red definitions of defs in python
+" using 16 I get correct yellow definitions of defs and correct PowerLine bar
+"set t_Co=256
+set t_Co=16
+
+au FocusLost * :wa
+au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/plugin/yaml.vim
+au BufRead,BufNewFile *.txt setfiletype text
+autocmd FileType text setlocal tw=80 fo=ltc
+" Enable spell check for text files
+"if v:version >= 700
+"    autocmd BufNewFile,BufRead *.txt setlocal spell spelllang=en
+"endif
+
+" Highlight current line
+"set cul
+hi CursorLine term=none cterm=none ctermbg=7
+
+" ----------------------- Custom let-ings ---------------------
+" set my leader key
+let mapleader = ","
+" Erlang settings
+let g:erlangFold=0
+let g:snips_author = 'Valentin Kuznetsov <vkuznet@gmail.com>'
+" Powerline settings
+let g:Powerline_symbols = 'unicode'
+
+" ----------------------- Custom mappings ---------------------
+" toggle paste outside INSERT mode "
+map <Leader>p :set invpaste<CR>:set paste?<CR> 
+" toggle paste in INSERT mode "
+set pastetoggle=<leader>p
+" use space to clear up highlights
+nnoremap <leader><space> :noh<cr>
+" use tab for jumping around brackets
+nnoremap <tab> %
+vnoremap <tab> %
+" remove all white spaces at the end of the lines in a file
+nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
+"nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
+nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>:sort<CR>:noh<CR>
+"nnoremap <leader>S :sort<CR>:noh<CR>
+" enter spell check
+"nnoremap <leader>s :setlocal spell spelllang=en_us<CR>:set spell<CR>
+"nnoremap <leader>ns :set nospell<CR>
+" select visual block from the current line till the end of file
+nnoremap <leader>v V`]
+" vertical split and open up vimrc file
+nnoremap <leader>vimrc <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>i :set paste<CR>
+"nnoremap <leader>i :set compatible<CR>:set noai<CR>i
+"nnoremap <leader>ri :set nocompatible<CR>:set autoindent<CR>
+inoremap jj <ESC>
+" vertical split
+nnoremap <leader>v <C-w>v<C-w>l
+" horizontal split
+nnoremap <leader>h <C-w>s<C-w>l
+" run ack
+nnoremap <leader>a :Ack
+" undo plugin
+nnoremap <leader>undo :GundoToggle<CR>
+" useful save/quit
+nnoremap <leader>wq :wq!<CR>
+nnoremap <leader>q :q!<CR>
+" tagbar key
+"nmap <leader>t :TagbarToggle<CR>
+nmap <leader>t :TagbarOpenAutoClose<CR>
+" walk around location list (syntastic plugin store errors over there)
+nmap <leader>ll :ll<CR>
+nmap <leader>ln :lnext<CR>
+nmap <leader>lp :lprev<CR>
+
+" fold tag
+nnoremap <leader>ft Vatzf
+" Vim folding commands
+" https://www.linux.com/learn/tutorials/442438-vim-tips-folding-fun
+"zf#j creates a fold from the cursor down # lines.
+"zf/string creates a fold from the cursor to string .
+"zj moves the cursor to the next fold.
+"zk moves the cursor to the previous fold.
+"zo opens a fold at the cursor.
+"zO opens all folds at the cursor.
+"zm increases the foldlevel by one.
+"zM closes all open folds.
+"zr decreases the foldlevel by one.
+"zR decreases the foldlevel to zero -- all folds will be open.
+"zR open all folds
+"zd deletes the fold at the cursor.
+"zE deletes all folds.
+"[z move to start of open fold.
+"]z move to end of open fold.
+
+" -----------------------------------------------------------
+" I use C-Left/Right to switch between OSX spaces, once I'll upgrade to Lion
+" I need to check if I can put back the mapping in vim
+" here <silent> – tells vim not to echo to the statusline what its doing during
+" the execution of the mapping.
+" Next Tab
+nnoremap <silent> <C-n> :tabnext<CR>
+" Previous Tab
+nnoremap <silent> <C-p> :tabprevious<CR>
+" New Tab
+nnoremap <silent> <C-t> :tabnew<CR>
+" move-up to next window
+nnoremap <silent> <C-k> :wincmd k<CR>
+" move-down to next window
+nnoremap <silent> <C-j> :wincmd j<CR>
+" move-left to next window
+nnoremap <silent> <C-h> :wincmd h<CR>
+" move-right to next window
+nnoremap <silent> <C-l> :wincmd l<CR>
+" move-up, use shift-key plus k
+nnoremap <silent> <S-k> <C-U><C-U>
+" move-down, use shift-key plus j
+nnoremap <silent> <S-j> <C-D><C-D>
+" -----------------------------------------------------------
+
+" ----------------------- Custom colors ---------------------
+" COLORS
+" color scheme
+" colorscheme molokai.vim
+" -----------------------------------------------------------
