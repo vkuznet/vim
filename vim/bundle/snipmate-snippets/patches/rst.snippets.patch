@@ -1,0 +1,21 @@
+diff --git a/snippets/rst.snippets b/snippets/rst.snippets
+index 97845de..e294afa 100644
+--- a/snippets/rst.snippets
++++ b/snippets/rst.snippets
+@@ -20,3 +20,16 @@ snippet -
+ snippet cont:
+ 	.. contents::
+ 	
++snippet cb
++	.. code-block:: ${1:python}
++
++		${2:code}
++
++		$0
++snippet toc
++	.. toctree::
++		:maxdepth: ${1:2}
++snippet ref
++	\`${1:ref} <${2:url}>\`_
++snippet v
++	\`\`${1:variable}\`\`

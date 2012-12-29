@@ -1,0 +1,27 @@
+diff --git a/snippets/c.snippets b/snippets/c.snippets
+index c476de4..f89790b 100644
+--- a/snippets/c.snippets
++++ b/snippets/c.snippets
+@@ -42,8 +42,11 @@ snippet #if
+ # header include guard
+ snippet once
+ 	#ifndef ${1:`toupper(Filename('$1_H', 'UNTITLED_H'))`}
+-
+ 	#define $1
++	/*
++	 * Created by ${2:`g:snips_author`} on `strftime("%Y-%m-%d %H:%M:%S")`.
++	 * All rights reserved.
++	 */
+ 
+ 	${2}
+ 
+@@ -233,3 +236,9 @@ snippet gpl
+ 	 */
+ 	
+ 	${2}
++
++# comment
++snippet com
++	/*  
++	 * ${1}
++	 * */

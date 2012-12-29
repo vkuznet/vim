@@ -1,0 +1,167 @@
+diff --git a/snippets/cpp.snippets b/snippets/cpp.snippets
+index c3e19fe..00501a9 100644
+--- a/snippets/cpp.snippets
++++ b/snippets/cpp.snippets
+@@ -1,5 +1,27 @@
++## Documentation
++snippet doc
++	/*
++	 * ${1:function()}
++	 * Created by ${2:`g:snips_author`} on `strftime("%Y-%m-%d %H:%M:%S")`.
++	 *
++	 * Description:
++	 *    ${3:Function/Method Description}
++	 * Parameters:
++	 *    ${4:input parameters}
++	 * Returns:
++	 *	  ${5:return value}
++	 * Throws:
++	 *    ${6:Exceptions}
++	 */
++snippet top
++	// `expand('%:t')`
++	// Created by ${1:`g:snips_author`} on `strftime("%Y-%m-%d %H:%M:%S")`.
++	// All rights reserved.
++
++
+ ## STL Collections
+ # std::array
++
+ snippet array
+ 	std::array<${1:T}, ${2:N}> ${3};${4}
+ # std::vector
+@@ -64,30 +86,119 @@ snippet fr
+ # mutable
+ snippet mu
+ 	mutable
+-## 
+-## Class
+-# class
++##
++## Classes
++##
+ snippet cl
+-	class ${1:`Filename('$1', 'name')`} 
++	class ${1:`Filename('$1', 'name')`}
+ 	{
++		// ---------- friend classes and functions ---------------
+ 	public:
++		// ---------- constants, enums and typedefs --------------
++
++		// ---------- Constructors and destructor ----------------
+ 		$1(${2});
+-		~$1();
++		//virtual ~$1();
++
++		// ---------- member functions ---------------------------
++
++		// ---------- const member functions ---------------------
++
++		// ---------- static member functions --------------------
++
++	protected:
++		// ---------- protected member functions -----------------
++
++		// ---------- protected const member functions -----------
+ 
+ 	private:
+-		${3:/* data */}
++		// ---------- Constructors and destructor ----------------
++		$1( const $1& src ); // copy-ctor, stop default
++
++		// ---------- assignment operator(s) ---------------------
++		const $1& operator=( const $1& rhs ); // stop default
++
++		// ---------- private member functions -------------------
++
++		// ---------- private const member functions -------------
++
++		// ---------- data members -------------------------------
++
++		// ---------- static data members ------------------------
+ 	};
+ # member function implementation
+ snippet mfun
+ 	${4:void} ${1:`Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
+ 		${5:/* code */}
+ 	}
++snippet tcl
++	template <typename T>
++	class ${1:`Filename('$1', 'name')`}
++	{
++		// ---------- friend classes and functions ---------------
++	public:
++		// ---------- constants, enums and typedefs --------------
++
++		// ---------- Constructors and destructor ----------------
++		$1(${2});
++		//virtual ~$1();
++
++		// ---------- member functions ---------------------------
++
++		// ---------- const member functions ---------------------
++
++		// ---------- static member functions --------------------
++
++	protected:
++		// ---------- protected member functions -----------------
++
++		// ---------- protected const member functions -----------
++
++	private:
++		// ---------- Constructors and destructor ----------------
++		$1( const $1<T>& src ); // copy-ctor, stop default
++
++		// ---------- assignment operator(s) ---------------------
++		const $1<T>& operator=( const $1<T>& rhs ); // stop default
++
++		// ---------- private member functions -------------------
++
++		// ---------- private const member functions -------------
++
++		// ---------- data members -------------------------------
++
++		// ---------- static data members ------------------------
++	};
++# member function implementation
++snippet mtfun
++	template <typename T>
++	${4:void}
++	${1:`Filename('$1', 'ClassName')`}<T>::${2:memberFunction}(${3}) {
++		${5:/* code */}
++	}
+ # namespace
+ snippet ns
+ 	namespace ${1:`Filename('', 'my')`} {
+ 		${2}
+ 	} /* namespace $1 */
+ ##
++## Pointers and casts
++##
++snippet sptr
++	shared_ptr<$1>
++snippet uptr
++	unique_ptr<$1>
++
++snippet ccast
++	const_cast<$1>($2)
++snippet scast
++	static_cast<$1>($2)
++snippet rcast
++	reinterpret_cast<$1>($2)
++snippet dcast
++	dynamic_cast<$1>($2)
++
++##
+ ## Input/Output
+ # std::cout
+ snippet cout
+@@ -97,7 +208,7 @@ snippet cin
+ 	std::cin >> ${1};${2}
+ ##
+ ## Iteration
+-# for i 
++# for i
+ snippet fori
+ 	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
+ 		${4:/* code */}

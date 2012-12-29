@@ -1,0 +1,28 @@
+diff --git a/snippets/python.snippets b/snippets/python.snippets
+index dd2e812..dee3bec 100644
+--- a/snippets/python.snippets
++++ b/snippets/python.snippets
+@@ -1,5 +1,23 @@
+ snippet #!
+ 	#!/usr/bin/env python
++	#-*- coding: utf-8 -*-
++	#pylint: disable-msg=
++	"""
++	File       : ${1:`Filename('$1.py', 'foo.py')`}
++	Author     : ${2:`g:snips_author`}
++	Description: ${3}
++	"""
++
++	# system modules
++	import os
++	import sys
++
++	def main():
++	    "Main function"
++	    pass
++
++	if __name__ == '__main__':
++	    main()
+ snippet imp
+ 	import ${1:module}
+ snippet from
