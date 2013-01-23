@@ -19,3 +19,7 @@ git clone git://github.com/Lokaltog/vim-powerline.git
 git clone git://github.com/garbas/vim-snipmate.git
 git clone git://github.com/tpope/vim-surround.git
 git clone git://github.com/sjl/learnvimscriptthehardway.git
+git clone git://github.com/huyz/less.vim.git
+git clone git://github.com/Rip-Rip/clang_complete.git
+# r-plugin
+# http://www.vim.org/scripts/script.php?script_id=2628
