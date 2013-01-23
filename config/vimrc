@@ -53,7 +53,8 @@ set ruler
 set undofile
 set wrap
 set textwidth=79
-set formatoptions=qrn1
+"set formatoptions=qrn1
+set formatoptions-=cro
 "set colorcolumn=85
 set backspace=indent,eol,start
 "set foldmethod=marker
@@ -61,10 +62,14 @@ set backspace=indent,eol,start
 set foldlevel=99
 set wildmenu
 set wildmode=list:longest,full
+"--------------------------------------------
+" PLEASE note VK 01/09/13: I found that autocompletion
+" quite often stuck, especially in snippets mode, so I'll disable it
 " set autocompletion to read from dictionary
 " see more http://vim.wikia.com/wiki/Dictionary_completions
-set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
-set complete-=k complete+=k
+"set dictionary-=/usr/share/dict/words dictionary+=/usr/share/dict/words
+"set complete-=k complete+=k
+"--------------------------------------------
 ":retab
 ":map <F12> :set number!<CR>
 ":set spell
@@ -75,7 +80,7 @@ set t_Co=256
 "set t_Co=16
 
 au FocusLost * :wa
-au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/plugin/yaml.vim
+"au BufNewFile,BufRead *.yaml,*.yml so ~/.vim/plugin/yaml.vim
 au BufRead,BufNewFile *.txt setfiletype text
 autocmd FileType text setlocal tw=80 fo=ltc
 " Enable spell check for text files
@@ -91,7 +96,7 @@ hi CursorLine term=none cterm=none ctermbg=7
 " remap ESC key
 inoremap jj <ESC>
 " set my leader key
-let mapleader = ","
+let mapleader = "\\"
 " Erlang settings
 let g:erlangFold=0
 let g:snips_author = 'Valentin Kuznetsov <vkuznet@gmail.com>'
@@ -105,9 +110,9 @@ let g:Powerline_symbols = 'compatible'
 
 " ----------------------- Custom mappings ---------------------
 " toggle paste outside INSERT mode "
-"map <Leader>p :set invpaste<CR>:set paste?<CR>
+map <Leader>p :set invpaste<CR>:set paste?<CR>
 " toggle paste in INSERT mode "
-"set pastetoggle=<leader>p
+set pastetoggle=<leader>p
 " use space to clear up highlights
 nnoremap <leader><space> :noh<cr>
 " open snippet file
@@ -120,18 +125,15 @@ nnoremap <leader>vv "*p<CR>
 " remove all white spaces at the end of the lines in a file
 nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 "nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>k:sort<CR>:noh<CR>
-nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>:sort<CR>:noh<CR>
+"nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>:sort<CR>:noh<CR>
 "nnoremap <leader>S :sort<CR>:noh<CR>
 " enter spell check
-"nnoremap <leader>s :setlocal spell spelllang=en_us<CR>:set spell<CR>
-"nnoremap <leader>ns :set nospell<CR>
+nnoremap <leader>s :setlocal spell spelllang=en_us<CR>:set spell<CR>
+nnoremap <leader>ns :set nospell<CR>
 " select visual block from the current line till the end of file
 "nnoremap <leader>v V`]
 " vertical split and open up vimrc file
 nnoremap <leader>vimrc <C-w><C-v><C-l>:e $MYVIMRC<cr>
-"nnoremap <leader>i :set paste<CR>
-"nnoremap <leader>i :set compatible<CR>:set noai<CR>i
-"nnoremap <leader>ri :set nocompatible<CR>:set autoindent<CR>
 " vertical split
 nnoremap <leader>v <C-w>v<C-w>l
 " horizontal split
@@ -146,6 +148,7 @@ nnoremap <leader>q :q!<CR>
 " tagbar key
 "nmap <leader>t :TagbarToggle<CR>
 nmap <leader>t :TagbarOpenAutoClose<CR>
+"nmap <leader>ct :!/opt/local/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " walk around location list (syntastic plugin store errors over there)
 nmap <leader>ll :ll<CR>
 nmap <leader>ln :lnext<CR>
@@ -171,6 +174,17 @@ nnoremap <leader>ft Vatzf
 "[z move to start of open fold.
 "]z move to end of open fold.
 
+"Useful commands
+"zR	Unfold all folded lines in file.
+"za	Open/close (toggle) a folded group of lines.
+"zA	Open a closed fold or close an open fold recursively.
+"zc	Close a folded group of lines.
+"zC	Close all folded lines recursively.
+"zd	Delete a folded line.
+"zD	Delete all folded lines recursively.
+"zE	Eliminate all folded lines in file.
+"zF	Create N-folded lines.
+"
 " -----------------------------------------------------------
 " I use C-Left/Right to switch between OSX spaces, once I'll upgrade to Lion
 " I need to check if I can put back the mapping in vim
@@ -210,3 +224,29 @@ nnoremap <silent> <S-j> <C-D><C-D>
 let g:syntastic_mode_map = {'mode':'passive', 'active_filetypes':[], 'passive_filetypes':[]}
 nmap <leader>sc :SyntasticCheck<CR>
 
+highlight   clear
+highlight   Pmenu         ctermfg=0 ctermbg=2
+highlight   PmenuSel      ctermfg=0 ctermbg=7
+highlight   PmenuSbar     ctermfg=7 ctermbg=0
+highlight   PmenuThumb    ctermfg=0 ctermbg=7
+"set tags+=~/.vim/tags/stl
+
+" Complete options (disable preview scratch window)
+set completeopt=menu,menuone,longest
+" Limit popup menu height
+"set pumheight = 15
+ 
+" SuperTab option for context aware completion
+let g:SuperTabDefaultCompletionType = "context"
+ 
+" Disable auto popup, use <Tab> to autocomplete
+let g:clang_complete_auto = 0
+" Show clang errors in the quickfix window
+let g:clang_complete_copen = 1
+let g:clang_use_library = 1
+let g:clang_library_path = "/opt/local/libexec/llvm-3.3/lib/"
+let g:clang_exec = '"/opt/local/bin/clang++ -std=c++11 -x c++'
+let g:clang_user_options = '2> NUL || exit 0"'
+
+" r-plugin
+let vimrplugin_screenplugin = 0
