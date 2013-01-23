@@ -1,5 +1,5 @@
 diff --git a/snippets/cpp.snippets b/snippets/cpp.snippets
-index c3e19fe..00501a9 100644
+index c3e19fe..2c7cc18 100644
 --- a/snippets/cpp.snippets
 +++ b/snippets/cpp.snippets
 @@ -1,5 +1,27 @@
@@ -30,7 +30,17 @@ index c3e19fe..00501a9 100644
  snippet array
  	std::array<${1:T}, ${2:N}> ${3};${4}
  # std::vector
-@@ -64,30 +86,119 @@ snippet fr
+@@ -47,6 +69,9 @@ snippet queue
+ # std::priority_queue
+ snippet pqueue
+ 	std::priority_queue<${1:T}> ${2};${3}
++# std::atomic
++snippet atomic
++	std::atomic<${1:T}> ${2};
+ ##
+ ## Access Modifiers
+ # private
+@@ -64,30 +89,169 @@ snippet fr
  # mutable
  snippet mu
  	mutable
@@ -42,16 +52,17 @@ index c3e19fe..00501a9 100644
 +##
  snippet cl
 -	class ${1:`Filename('$1', 'name')`} 
-+	class ${1:`Filename('$1', 'name')`}
- 	{
+-	{
++	class ${1:`Filename('$1', 'name')`} {
 +		// ---------- friend classes and functions ---------------
  	public:
+-		$1(${2});
+-		~$1();
 +		// ---------- constants, enums and typedefs --------------
 +
 +		// ---------- Constructors and destructor ----------------
- 		$1(${2});
--		~$1();
-+		//virtual ~$1();
++		$1();
++		virtual ~$1();
 +
 +		// ---------- member functions ---------------------------
 +
@@ -67,10 +78,14 @@ index c3e19fe..00501a9 100644
  	private:
 -		${3:/* data */}
 +		// ---------- Constructors and destructor ----------------
-+		$1( const $1& src ); // copy-ctor, stop default
++		$1( const $1& src ); // copy-ctor
++		// $1(const $1&) = delete; // stop default
++		$1( $1&& src ); // move-ctor
 +
 +		// ---------- assignment operator(s) ---------------------
-+		const $1& operator=( const $1& rhs ); // stop default
++		const $1& operator=( const $1& rhs ); // copy assignment oper
++		// const $1& operator=(const $1&) = delete; // stop default
++		$1& operator=( $1&& rhs ); // move assignment oper
 +
 +		// ---------- private member functions -------------------
 +
@@ -85,17 +100,32 @@ index c3e19fe..00501a9 100644
  	${4:void} ${1:`Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
  		${5:/* code */}
  	}
++snippet m=
++	${1:`Filename('$1', 'ClassName')`}&
++	$1::operator=(const $1& rhs)
++	{
++		// Check for self-assignment.
++		if (this == &rhs) {
++			return *this;
++		}
++		${2:/* $1 assignment: free old memory, copy new memory */}
++		return *this;
++	}
++snippet mcopy
++	${1:`Filename('$1', 'ClassName')`}::$1(const $1& src)
++	{
++		${2:/* $1 copy ctor */}
++	}
 +snippet tcl
 +	template <typename T>
-+	class ${1:`Filename('$1', 'name')`}
-+	{
++	class ${1:`Filename('$1', 'name')`} {
 +		// ---------- friend classes and functions ---------------
 +	public:
 +		// ---------- constants, enums and typedefs --------------
 +
 +		// ---------- Constructors and destructor ----------------
-+		$1(${2});
-+		//virtual ~$1();
++		$1();
++		virtual ~$1();
 +
 +		// ---------- member functions ---------------------------
 +
@@ -110,10 +140,14 @@ index c3e19fe..00501a9 100644
 +
 +	private:
 +		// ---------- Constructors and destructor ----------------
-+		$1( const $1<T>& src ); // copy-ctor, stop default
++		$1( const $1<T>& src ); // copy-ctor
++		// $1(const $1<T>&) = delete; // stop default
++		$1( $1<T>&& src ); // move-ctor
 +
 +		// ---------- assignment operator(s) ---------------------
-+		const $1<T>& operator=( const $1<T>& rhs ); // stop default
++		const $1<T>& operator=( const $1<T>& rhs ); // copy assignment oper
++		// const $1<T>& operator=(const $1<T>&) = delete; // stop default
++		$1<T>& operator=( $1<T>&& rhs ); // move assignment oper
 +
 +		// ---------- private member functions -------------------
 +
@@ -130,7 +164,27 @@ index c3e19fe..00501a9 100644
 +	${1:`Filename('$1', 'ClassName')`}<T>::${2:memberFunction}(${3}) {
 +		${5:/* code */}
 +	}
++snippet mt=
++	template <typename T>
++	${1:`Filename('$1', 'ClassName')`}&
++	$1::operator=(const $1& rhs)
++	{
++		// Check for self-assignment.
++		if (this == &rhs) {
++			return *this;
++		}
++		${2:/* $1 assignment: free old memory, copy new memory */}
++		return *this;
++	}
++snippet mtcopy
++	template <typename T>
++	${1:`Filename('$1', 'ClassName')`}::$1(const $1& src)
++	{
++		${2:/* $1 copy ctor */}
++	}
  # namespace
++snippet nstd
++	using namespace std;
  snippet ns
  	namespace ${1:`Filename('', 'my')`} {
  		${2}
@@ -139,24 +193,32 @@ index c3e19fe..00501a9 100644
 +## Pointers and casts
 +##
 +snippet sptr
-+	shared_ptr<$1>
++	shared_ptr<${1}>
 +snippet uptr
-+	unique_ptr<$1>
++	unique_ptr<${1}>
 +
 +snippet ccast
-+	const_cast<$1>($2)
++	const_cast<${1}>(${2})
 +snippet scast
-+	static_cast<$1>($2)
++	static_cast<${1}>(${2})
 +snippet rcast
-+	reinterpret_cast<$1>($2)
++	reinterpret_cast<${1}>(${2})
 +snippet dcast
-+	dynamic_cast<$1>($2)
++	dynamic_cast<${1}>(${2})
 +
++snippet spcast
++	static_pointer_cast<${1}>(${2})
++snippet dpcast
++	dynamic_pointer_cast<${1}>(${2})
++snippet cpcast
++	const_pointer_cast<${1}>(${2})
++snippet ilist
++	initializer_list<${1}>
 +##
  ## Input/Output
  # std::cout
  snippet cout
-@@ -97,7 +208,7 @@ snippet cin
+@@ -97,7 +261,7 @@ snippet cin
  	std::cin >> ${1};${2}
  ##
  ## Iteration
@@ -165,3 +227,37 @@ index c3e19fe..00501a9 100644
  snippet fori
  	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
  		${4:/* code */}
+@@ -129,3 +293,33 @@ snippet lld
+ 	[${1}](${2}){
+ 		${3:/* code */}
+ 	}${4}
++
++# Matrix allocation and destructions
++snippet ctor_mat
++	${1:mMatrix} = new ${2:Element}*[${3:mWidth}];
++	unsigned int i = 0;
++	try {
++		for (i = 0; i < ${4:mHeight}; ++i)
++			$1[i] = new $2[$4];
++	} catch (...) {
++		cout << "Exception caught in ctor, cleaning up...” << endl;
++		// Clean up any memory we already allocated, because the destructor
++		// will never be called. The upper bound of the for loop is the
++		// index of the last element in the $1 array that we tried
++		// to allocate (the one that failed). All indices before that
++		// one store pointers to allocated memory that must be freed.
++		for (unsigned int j = 0; j < i; j++) {
++			delete [] $1[j];
++		}
++		delete [] $1;
++		$1 = nullptr;
++		// Translate any exception to bad_alloc, to be defined via #include <stdexcept>
++		throw bad_alloc();
++	}
++
++snippet dtor_mat
++	for (unsigned int i = 0; i < ${2:m_height}; ++i) {
++		delete [] ${1:m_mat}[i];
++	}
++	delete [] $1;
++	$1 = nullptr;

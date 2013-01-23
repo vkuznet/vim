@@ -1,7 +1,16 @@
 diff --git a/snippets/c.snippets b/snippets/c.snippets
-index c476de4..f89790b 100644
+index c476de4..4322987 100644
 --- a/snippets/c.snippets
 +++ b/snippets/c.snippets
+@@ -17,7 +17,7 @@ snippet mainn
+ ## Preprocessor 
+ # #include <...>
+ snippet inc
+-	#include <${1:stdio}.h>${2}
++	#include <${1:stdio.h}>${2}
+ # #include "..."
+ snippet Inc
+ 	#include "${1:`Filename("$1.h")`}"${2}
 @@ -42,8 +42,11 @@ snippet #if
  # header include guard
  snippet once
@@ -15,6 +24,17 @@ index c476de4..f89790b 100644
  
  	${2}
  
+@@ -210,8 +213,8 @@ snippet getopt
+ ##
+ ## Miscellaneous
+ # This is kind of convenient
+-snippet .
+-	[${1}]${2}
++#snippet .
++#	[${1}]${2}
+ # GPL
+ snippet gpl
+ 	/*
 @@ -233,3 +236,9 @@ snippet gpl
  	 */
  	
