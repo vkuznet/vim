@@ -1,0 +1,6 @@
+http://www.zwiener.org/vimautocomplete.html
+https://github.com/Rip-Rip/clang_complete/wiki
+https://coderwall.com/p/yzpdhq
+http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+# correct filetypes
+http://ftp.twaren.net/vim/runtime/filetype.vim
