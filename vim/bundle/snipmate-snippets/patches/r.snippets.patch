@@ -1,0 +1,13 @@
+diff --git a/snippets/r.snippets b/snippets/r.snippets
+index 71186e3..8359fad 100644
+--- a/snippets/r.snippets
++++ b/snippets/r.snippets
+@@ -1,6 +1,8 @@
+ snippet #!
+ 	#!/usr/bin/env Rscript
+ 
++snippet =
++	<- 
+ # includes
+ snippet lib
+ 	library(${1:package})
