@@ -115,6 +115,7 @@ map <Leader>p :set invpaste<CR>:set paste?<CR>
 set pastetoggle=<leader>p
 " use space to clear up highlights
 nnoremap <leader><space> :noh<cr>
+nnoremap <leader>nt :NERDTree<cr>
 " open snippet file
 nnoremap <leader>snip :e ~/.vim/bundle/snipmate-snippets/snippets/
 " use tab for jumping around brackets
@@ -128,7 +129,7 @@ nnoremap <leader>W :%s/\s\+$//<cr>:let @/=''<CR>
 "nnoremap <leader>S ?{<CR>jV/^\s*\}?$<CR>:sort<CR>:noh<CR>
 "nnoremap <leader>S :sort<CR>:noh<CR>
 " enter spell check
-nnoremap <leader>s :setlocal spell spelllang=en_us<CR>:set spell<CR>
+nnoremap <leader>sp :setlocal spell spelllang=en_us<CR>:set spell<CR>
 nnoremap <leader>ns :set nospell<CR>
 " select visual block from the current line till the end of file
 "nnoremap <leader>v V`]
@@ -146,13 +147,13 @@ nnoremap <leader>undo :GundoToggle<CR>
 nnoremap <leader>wq :wq!<CR>
 nnoremap <leader>q :q!<CR>
 " tagbar key
-"nmap <leader>t :TagbarToggle<CR>
-nmap <leader>t :TagbarOpenAutoClose<CR>
-"nmap <leader>ct :!/opt/local/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+"nnoremap <leader>t :TagbarToggle<CR>
+nnoremap <leader>t :TagbarOpenAutoClose<CR>
+"nnoremap <leader>ct :!/opt/local/bin/ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " walk around location list (syntastic plugin store errors over there)
-nmap <leader>ll :ll<CR>
-nmap <leader>ln :lnext<CR>
-nmap <leader>lp :lprev<CR>
+nnoremap <leader>ll :ll<CR>
+nnoremap <leader>ln :lnext<CR>
+nnoremap <leader>lp :lprev<CR>
 
 " fold tag
 nnoremap <leader>ft Vatzf
@@ -191,9 +192,11 @@ nnoremap <leader>ft Vatzf
 " here <silent> – tells vim not to echo to the statusline what its doing during
 " the execution of the mapping.
 " Next buffer
-nmap <leader>n :bnext<CR>
-nmap <leader>b :bprev<CR>
-nmap <leader>wc :bdelete<CR>
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>b :bprev<CR>
+nnoremap <leader>d :bdelete<CR>
+nnoremap <leader><leader><space> :buffers<CR>:buffer<Space>
+"nnoremap <leader>wc :bdelete<CR>
 " Next Tab
 nnoremap <silent> <C-n> :tabnext<CR>
 " Previous Tab
@@ -222,7 +225,7 @@ nnoremap <silent> <S-j> <C-D><C-D>
 "
 " ----------------------- Syntatstic settings ---------------
 let g:syntastic_mode_map = {'mode':'passive', 'active_filetypes':[], 'passive_filetypes':[]}
-nmap <leader>sc :SyntasticCheck<CR>
+nnoremap <leader>sc :SyntasticCheck<CR>
 
 highlight   clear
 highlight   Pmenu         ctermfg=0 ctermbg=2
@@ -250,3 +253,10 @@ let g:clang_user_options = '2> NUL || exit 0"'
 
 " r-plugin
 let vimrplugin_screenplugin = 0
+
+" abbreviations
+:iabbrev adn and
+:iabbrev waht what
+:iabbrev tehn then
+:iabbrev @@ vkuznet@gmail.com
+:iabbrev ccopy Copyright 2013 Valentin Kuznetsov, all rights reserved.
